@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 import sqlite3
+import ploty as px
 import os
 
 # ---------------------------
@@ -148,6 +149,35 @@ if not df.empty:
 
     result = pd.read_sql(sql, conn)
     st.dataframe(result, use_container_width=True)
+
+
+     # ---------------------------
+    # AUTO CHARTS
+    # ---------------------------
+    fig = None
+    if choice in ["2. Average Ride Distance per Vehicle", "8. Average Customer Rating per Vehicle"]:
+        fig = px.bar(result, x=result.columns[0], y=result.columns[1], text_auto=True,
+                     color=result.columns[0], color_discrete_sequence=[OLA_GREEN, OLA_YELLOW, "#FF7043"])
+    elif choice == "4. Top 5 Customers by Ride Count":
+        fig = px.bar(result, x="customer_id", y="total_rides", text_auto=True,
+                     color="customer_id", color_discrete_sequence=[OLA_YELLOW])
+    elif choice == "3. Cancelled Rides by Customers":
+        st.metric("❌ Cancelled by Customers", result.iloc[0, 0])
+    elif choice == "5. Rides Cancelled by Drivers (Personal/Car Issues)":
+        st.metric("🚫 Cancelled by Drivers", result.iloc[0, 0])
+    elif choice == "9. Total Booking Value (Successful Rides)":
+        st.metric("💰 Total Successful Ride Value", f"₹ {result.iloc[0, 0]:,.2f}")
+
+    if fig:
+        fig.update_layout(
+            plot_bgcolor=OLA_BLACK,
+            paper_bgcolor=OLA_BLACK,
+            font=dict(color="white")
+        )
+        st.plotly_chart(fig, use_container_width=True)
+
+else:
+    st.stop()
 
 
 
