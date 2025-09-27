@@ -2,4 +2,5 @@ streamlit
 pandas
 sqlite3
 plotly
+openpyxl
 
