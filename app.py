@@ -50,7 +50,7 @@ st.markdown(
 # ---------------------------
 @st.cache_data
 def load_data():
-    file_path = "OLA_DataSet_July.csv"  
+    file_path = "OLA_DataSet_July.csv.csv"  
     
     if os.path.exists(file_path):
         df = pd.read_csv(file_path)
@@ -183,4 +183,5 @@ if not df.empty:
 
 else:
     st.stop()
+
 
