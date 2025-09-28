@@ -48,17 +48,17 @@ st.markdown(
 # ---------------------------
 # LOAD DATA
 # ---------------------------
-@st.cache_data
 def load_data():
-    # Update with your actual file path
-    file_path = r"C:\Users\bajpa\OneDrive\Desktop\OLA Ride\OLA_DataSet_July.csv.csv"
+    # First try to read from current folder (works on Streamlit Cloud if file is in repo)
+    file_path = "OLA_DataSet_July.csv"
 
-    if not os.path.exists(file_path):
-        st.error("⚠️ Data file not found! Please check the file path.")
+    if os.path.exists(file_path):
+        df = pd.read_csv(file_path)
+        return df
+    else:
+        st.error("⚠️ Data file not found! Please upload it or check path.")
         return pd.DataFrame()
-
-    df = pd.read_csv("OLA_DataSet_July.csv")
-
+        
     # 🔹 Standardize column names to match SQL queries
     df = df.rename(columns={
         "Ride Status": "Booking_status",
@@ -178,6 +178,7 @@ if not df.empty:
 
 else:
     st.stop()
+
 
 
 
