@@ -57,7 +57,7 @@ def load_data():
         st.error("⚠️ Data file not found! Please check the file path.")
         return pd.DataFrame()
 
-    df = pd.read_csv(file_path)
+    df = pd.read_csv("OLA_DataSet_July.csv")
 
     # 🔹 Standardize column names to match SQL queries
     df = df.rename(columns={
@@ -178,6 +178,7 @@ if not df.empty:
 
 else:
     st.stop()
+
 
 
 
