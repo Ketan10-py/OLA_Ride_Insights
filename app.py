@@ -90,49 +90,44 @@ if not df.empty:
     # SQL QUERIES
     # ---------------------------
     queries = {
-        "1. All Successful Bookings": """
-            SELECT * FROM Bookings WHERE ride_status = 'Success';
-        """,
-        "2. Average Ride Distance per Vehicle": """
-            SELECT vehicle_type, AVG(trip_distance) AS avg_distance 
-            FROM Bookings GROUP BY vehicle_type;
-        """,
+        "1. All Successful Bookings": """SELECT * FROM Bookings WHERE Booking_status = 'Success';""",
+        "2. Average Ride Distance per Vehicle": """SELECT vehicle_type, AVG(Ride_Distance) AS avg_distance FROM Bookings GROUP BY vehicle_type;""",
         "3. Cancelled Rides by Customers": """
-            SELECT COUNT(*) AS cancelled_by_customers
-            FROM Bookings WHERE ride_status = 'Cancelled by Customer';
-        """,
-        "4. Top 5 Customers by Ride Count": """
-            SELECT customer_id, COUNT(*) AS total_rides
-            FROM Bookings 
-            GROUP BY customer_id
-            ORDER BY total_rides DESC LIMIT 5;
-        """,
-        "5. Rides Cancelled by Drivers (Personal/Car Issues)": """
-            SELECT COUNT(*) AS cancelled_by_drivers
-            FROM Bookings
-            WHERE ride_status = 'Cancelled by Driver'
-              AND cancel_reason IN ('Personal', 'Car Issue');
-        """,
-        "6. Max & Min Driver Ratings (Prime Sedan)": """
-            SELECT MAX(driver_rating) AS max_rating,
-                   MIN(driver_rating) AS min_rating
-            FROM Bookings WHERE vehicle_type = 'Prime Sedan';
-        """,
-        "7. UPI Payments": """
-            SELECT * FROM Bookings WHERE payment_method = 'UPI';
-        """,
-        "8. Average Customer Rating per Vehicle": """
-            SELECT vehicle_type, AVG(customer_rating) AS avg_customer_rating
-            FROM Bookings GROUP BY vehicle_type;
-        """,
-        "9. Total Booking Value (Successful Rides)": """
-            SELECT SUM(booking_value) AS total_successful_value
-            FROM Bookings WHERE ride_status = 'Success';
-        """,
-        "10. Incomplete Rides with Reason": """
-            SELECT booking_id, customer_id, driver_id, cancel_reason
-            FROM Bookings WHERE ride_status = 'Incomplete';
-        """
+        SELECT COUNT(*) AS cancelled_by_customers
+        FROM Bookings WHERE Booking_status = 'Cancelled by Customer';
+    """,
+    "4. Top 5 Customers by Ride Count": """
+        SELECT Customer_ID AS customer_id, COUNT(*) AS total_rides
+        FROM Bookings 
+        GROUP BY customer_id
+        ORDER BY total_rides DESC LIMIT 5;
+    """,
+    "5. Rides Cancelled by Drivers (Personal/Car Issues)": """
+        SELECT COUNT(*) AS Canceled_Rides_by_Drivers
+        FROM Bookings
+        WHERE Booking_status = 'Canceled by Driver'
+          AND Incomplete_Rides_Reason IN ('Customer Demand', 'Vehicle Breakdown');
+    """,
+    "6. Max & Min Driver Ratings (Prime Sedan)": """
+        SELECT MAX(driver_ratings) AS max_rating,
+               MIN(driver_ratings) AS min_rating
+        FROM Bookings WHERE vehicle_type = 'Prime Sedan';
+    """,
+    "7. UPI Payments": """
+        SELECT * FROM Bookings WHERE payment_method = 'UPI';
+    """,
+    "8. Average Customer Rating per Vehicle": """
+        SELECT Vehicle_Type, AVG(Customer_Rating) AS avg_customer_rating
+        FROM Bookings GROUP BY Vehicle_Type;
+    """,
+    "9. Total Booking Value (Successful Rides)": """
+        SELECT SUM(Booking_Value) AS total_successful_value
+        FROM Bookings WHERE Booking_status = 'Success';
+    """,
+    "10. Incomplete Rides with Reason": """
+        SELECT booking_id, customer_id, Incomplete_Rides_Reason
+        FROM Bookings WHERE Booking_status = 'Canceled by Driver';
+    """
     }
 
     # ---------------------------
@@ -183,6 +178,7 @@ if not df.empty:
 
 else:
     st.stop()
+
 
 
 
