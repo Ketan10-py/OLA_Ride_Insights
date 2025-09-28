@@ -60,8 +60,8 @@ def load_data():
 
     # 🔹 Standardize column names to match SQL queries
     df = df.rename(columns={
-        "Ride Status": "ride_status",
-        "Trip Distance": "trip_distance",
+        "Ride Status": "Booking_status",
+        "Trip Distance": "distance",
         "Driver Rating": "driver_rating",
         "Customer Rating": "customer_rating",
         "Payment Type": "payment_method",
@@ -183,5 +183,6 @@ if not df.empty:
 
 else:
     st.stop()
+
 
 
